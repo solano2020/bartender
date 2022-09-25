@@ -80,8 +80,7 @@ public class BartenderService {
                 }
                 countQ++;
             }
-            response.put("OUTPUT", Arrays.toString(responseArray));
-            response.put("status", "OK");
+            response.put("output", Arrays.toString(responseArray));
         }
         return response;
     }

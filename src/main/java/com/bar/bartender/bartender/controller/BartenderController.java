@@ -24,10 +24,9 @@ public class BartenderController {
     @GetMapping("/array_response")
     public ResponseEntity<Map<String,String>> getArrayResponse(@RequestParam Integer q, @RequestParam Integer id){
         Map<String, String> arrayResponse = bartenderService.getArrayResponse(q, id);
-        if(arrayResponse.get("status").equals("OK")){
-            arrayResponse.remove("status");
+        if(arrayResponse.size() > 0){
             return ResponseEntity.ok(arrayResponse);
         }
-        return new ResponseEntity<>(arrayResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(arrayResponse, HttpStatus.NOT_FOUND);
     }
 }
