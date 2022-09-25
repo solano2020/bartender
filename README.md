@@ -15,7 +15,8 @@ Ejercicio de conceptos básicos de java en Spring Boot. Esta API permite consult
 
 - Luego cree una base de datos llamada **bartender**.
 
-- por último corra el proyecto, el cual está corriendo en el puerto 8090.
+- por último corra el proyecto. automaticamente correra la base de 
+datos cargando los datos correspondientes y el servidor en el puerto 8090.
 
 **Uso de la Api**
 
