@@ -21,11 +21,10 @@ public class BartenderService {
     }
 
     public Map<String, String> getArrayResponse(Integer q, Integer id) {
-        Map<String, String> response = new HashMap<>();
+        Map<String, String> responseArray = new HashMap<>();
         int[] p = {2, 3, 5, 7, 11, 13, 17};
-        int auxA = 0;
-        int countA = 0, countB = 0, countQ = 0, countArrayResponse = 0;
-        int[] a, b, responseArray;
+        int countArrayA = 0, countArrayB = 0, countQ = 0, countResponse = 0;
+        int[] arrayA, arrayB, response;
 
         Optional<Cups> cupsEntity = bartenderRepository.findById(id);
         if (cupsEntity.isPresent()) {
@@ -34,54 +33,55 @@ public class BartenderService {
                     .stream(cupsEntity.get().getInputArray().split(","))
                     .mapToInt(Integer::parseInt)
                     .toArray();
-            b = new int[cups.length];
-            a = new int[cups.length];
-            responseArray = new int[cups.length];
+            arrayB = new int[cups.length];
+            arrayA = new int[cups.length];
+            response = new int[cups.length];
 
             while (q > countQ) {
                 for (int i = cups.length - 1; i >= 0; i--) {
                     if (cups[i] != 0) {
                         if ((cups[i] % p[countQ]) == 0) {
-                            b[countB] = cups[i];
-                            countB++;
+                            arrayB[countArrayB] = cups[i];
+                            countArrayB++;
                         } else {
-                            auxA = cups[i];
-                            a[countA] = auxA;
-                            countA++;
+                            arrayA[countArrayA] = cups[i];
+                            countArrayA++;
                         }
                     }
                 }
 
-                for (int i = 0; i < b.length; i++) {
-                    if (b[i] != 0) {
-                        responseArray[countArrayResponse] = b[i];
-                        countArrayResponse++;
+                for (int j : arrayB) {
+                    if (j != 0) {
+                        response[countResponse] = j;
+                        countResponse++;
                     } else {
                         break;
                     }
                 }
 
                 for (int i = 0; i < cups.length; i++) {
-                    cups[i] = a[i];
-                    a[i] = 0;
-                    b[i] = 0;
+                    cups[i] = arrayA[i];
+                    arrayA[i] = 0;
+                    arrayB[i] = 0;
                 }
-                countB = 0;
-                countA = 0;
+                countArrayB = 0;
+                countArrayA = 0;
+
                 if (q == (countQ + 1) && cups[0] != 0) {
-                    for (int i = 0; i < cups.length; i++) {
-                        if (cups[i] != 0) {
-                            responseArray[countArrayResponse] = cups[i];
-                            countArrayResponse++;
+                    for (int cup : cups) {
+                        if (cup != 0) {
+                            response[countResponse] = cup;
+                            countResponse++;
                         } else {
                             break;
                         }
                     }
                 }
+
                 countQ++;
             }
-            response.put("output", Arrays.toString(responseArray));
+            responseArray.put("respuesta", Arrays.toString(response));
         }
-        return response;
+        return responseArray;
     }
 }

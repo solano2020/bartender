@@ -3,7 +3,7 @@ package com.bar.bartender.bartender.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "arrays", schema = "public")
+@Table(name = "cups", schema = "public")
 public class Cups {
 
     @Id
